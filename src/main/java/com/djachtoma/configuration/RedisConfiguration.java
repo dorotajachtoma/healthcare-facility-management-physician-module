@@ -1,7 +1,7 @@
 package com.djachtoma.configuration;
 
 import lombok.RequiredArgsConstructor;
-import model.Physician;
+import com.djachtoma.model.Physician;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
