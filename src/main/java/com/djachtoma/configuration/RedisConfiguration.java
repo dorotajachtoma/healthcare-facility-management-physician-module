@@ -1,5 +1,7 @@
 package com.djachtoma.configuration;
 
+import com.djachtoma.model.constant.Specialization;
+import com.djachtoma.model.constant.Title;
 import lombok.RequiredArgsConstructor;
 import com.djachtoma.model.Physician;
 import org.springframework.context.annotation.Bean;
@@ -8,8 +10,7 @@ import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.convert.KeyspaceConfiguration;
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
-
-import java.util.Collections;
+import java.util.Set;
 
 @Configuration
 @EnableRedisRepositories
@@ -37,6 +38,9 @@ public class RedisConfiguration extends KeyspaceConfiguration {
 
     @Override
     protected Iterable<KeyspaceSettings> initialConfiguration() {
-        return Collections.singleton(new KeyspaceSettings(Physician.class, Physician.class.getCanonicalName()));
+        return Set.of(
+                new KeyspaceSettings(Physician.class, Physician.class.getCanonicalName()),
+                new KeyspaceSettings(Title.class, Title.class.getCanonicalName()),
+                new KeyspaceSettings(Specialization.class, Specialization.class.getCanonicalName()));
     }
 }

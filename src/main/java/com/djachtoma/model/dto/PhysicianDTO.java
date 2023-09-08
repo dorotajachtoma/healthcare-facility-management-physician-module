@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Data
 @Builder
@@ -25,6 +26,8 @@ public class PhysicianDTO implements Comparable<PhysicianDTO> {
     private String city;
     private String zipCode;
     private String address;
+    private String title;
+    private Set<String> specializations;
 
     @Override
     public int compareTo(PhysicianDTO o) {
