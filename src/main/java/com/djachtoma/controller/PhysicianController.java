@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.security.Principal;
-
 @Slf4j
 @RestController
 @RequiredArgsConstructor
@@ -27,33 +25,32 @@ public class PhysicianController {
     private final PhysicianService physicianService;
 
     @GetMapping
-    public Flux<PhysicianDTO> getPhysicians(Principal principal) {
-        log.info("%s is invoked by: %s", this.getClass().getName() + ".getPhysicians", principal.getName());
+    public Flux<PhysicianDTO> getPhysicians() {
+        log.info("%s is invoked by: %s", this.getClass().getName() + ".getPhysicians");
         return physicianService.getPhysicians();
     }
 
     @GetMapping("/{id}")
-    public Mono<PhysicianDTO> getPhysician(@PathVariable String id, Principal principal) {
-        log.info("%s is invoked by: %s", this.getClass().getName() + ".getPhysician", principal.getName());
+    public Mono<PhysicianDTO> getPhysician(@PathVariable String id) {
+        log.info("%s is invoked by: %s", this.getClass().getName() + ".getPhysician");
         return physicianService.getPhysician(id);
     }
 
     @PostMapping
-    public Mono<PhysicianDTO> createPhysician(@RequestBody PhysicianDTO physicianDTO, Principal principal) {
-        log.info("%s is invoked by: %s", this.getClass().getName() + ".createPhysician", principal.getName());
+    public Mono<PhysicianDTO> createPhysician(@RequestBody PhysicianDTO physicianDTO) {
+        log.info("%s is invoked by: %s", this.getClass().getName() + ".createPhysician");
         return physicianService.createPhysician(physicianDTO);
     }
 
     @PatchMapping("/{id}")
-    public Mono<PhysicianDTO> updatePhysician(@PathVariable String id, @RequestBody PhysicianDTO physicianDTO,
-                                              Principal principal) {
-        log.info("%s is invoked by: %s", this.getClass().getName() + ".updatePhysician", principal.getName());
+    public Mono<PhysicianDTO> updatePhysician(@PathVariable String id, @RequestBody PhysicianDTO physicianDTO) {
+        log.info("%s is invoked by: %s", this.getClass().getName() + ".updatePhysician");
         return physicianService.updatePhysician(id, physicianDTO);
     }
 
     @DeleteMapping("/{id}")
-    public void deletePhysician(@PathVariable String id, Principal principal) {
-        log.info("%s is invoked by: %s", this.getClass().getName() + ".deletePhysician", principal.getName());
+    public void deletePhysician(@PathVariable String id) {
+        log.info("%s is invoked by: %s", this.getClass().getName() + ".deletePhysician");
         physicianService.deletePhysician(id);
     }
 }

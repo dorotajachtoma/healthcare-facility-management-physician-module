@@ -2,12 +2,14 @@ package com.djachtoma.model.dto;
 
 import com.djachtoma.model.Physician;
 import com.djachtoma.model.constant.Specialization;
+import com.djachtoma.model.constant.Title;
 import com.djachtoma.reference.entity.model.Address;
 import com.djachtoma.reference.entity.model.Gender;
 import com.djachtoma.reference.entity.model.IDCard;
 import com.djachtoma.reference.entity.model.PhoneNumber;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Component
@@ -25,10 +27,10 @@ public class PhysicianMapper {
                 .city(physician.getAddress().getCity())
                 .zipCode(physician.getAddress().getZipCode())
                 .address(physician.getAddress().getAddress())
-                .specializations(physician.getSpecialization().stream()
-                        .map(Specialization::getDescription)
-                        .collect(Collectors.toSet()))
-                .title(physician.getTitle().description)
+                .specializations(Objects.nonNull(physician.getSpecialization()) ? physician.getSpecialization().stream()
+                        .map(Specialization::name)
+                        .collect(Collectors.toSet()) : null)
+                .title(physician.getTitle().name())
                 .build();
     }
 
@@ -49,6 +51,10 @@ public class PhysicianMapper {
                         .zipCode(physicianDTO.getZipCode())
                         .address(physicianDTO.getAddress())
                         .build())
+                .specialization(physicianDTO.getSpecializations().stream()
+                        .map(specialization -> Specialization.valueOf(specialization))
+                        .collect(Collectors.toSet()))
+                .title(Title.valueOf(physicianDTO.getTitle()))
                 .build();
     }
 }
