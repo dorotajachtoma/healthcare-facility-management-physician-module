@@ -65,8 +65,9 @@ public class PhysicianService {
         nullSafeUpdate(physicianDTO.getGender(), physicianDTO::getGender, x -> physician.setGender(Gender.valueOf(x)));
         nullSafeUpdate(physician.getDateOfBirth(), physicianDTO::getDateOfBirth, physician::setDateOfBirth);
         nullSafeUpdate(physicianDTO.getTitle(), physicianDTO::getTitle, x -> physician.setTitle(Title.valueOf(x)));
-        nullSafeUpdate(physicianDTO.getSpecializations(), physicianDTO::getSpecializations, x -> physician.getSpecialization()
-                .add(Specialization.valueOf(x.iterator().next())));
+        nullSafeUpdate(physicianDTO.getSpecializations(), physicianDTO::getSpecializations, x -> physician.setSpecialization(x.stream()
+                .map(s -> Specialization.valueOf(s))
+                .collect(Collectors.toSet())));
         nullSafeUpdate(physicianDTO.getIdCardSeriesNumber(), physicianDTO::getIdCardSeriesNumber, x -> physician.setIdCard(IDCard.builder()
                 .seriesNumber(x)
                 .build()));
@@ -79,7 +80,7 @@ public class PhysicianService {
     
     private Physician getPhysicianById(String id) {
         return physicianRepository.findById(id)
-                .orElseThrow(() -> new PhysicianNotFoundException("Physician with provided id does not exist."));
+                .orElseThrow(() -> new PhysicianNotFoundException(String.format("Physician with provided ID: %s does not exist.", id)));
     }
 
 }
